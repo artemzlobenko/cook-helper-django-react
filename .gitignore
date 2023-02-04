@@ -1,3 +1,6 @@
+*/migrations
 *.sqlite3
 */__pycache__/
 .vscode
+ngrok.exe
+test.py

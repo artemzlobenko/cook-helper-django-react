@@ -22,5 +22,6 @@ admin.site.register(Measure)
 admin.site.register(Unit)
 admin.site.register(Ingredient, IngredientAdmin)
 admin.site.register(Meal, MealAdmin)
+admin.site.register(UserStorage)
 
 
