@@ -153,6 +153,10 @@ in_none = lambda string: bool(re.compile(r'|'.join(NON_MEASURABLE)).search(strin
 def get_unit(measure):
     if in_grams(measure):
         abbreviations = ['g', 'gr', 'gram']
+        unicode_fractions = {'¼': 0.25}
+        for fract, val in unicode_fractions.items():
+            if fract in measure:
+                return val, Units.GRAMS, abbreviations
         amount = get_value_of_units(measure, abbreviations)
         return amount, Units.GRAMS, abbreviations
     elif in_kilograms(measure):
@@ -173,6 +177,10 @@ def get_unit(measure):
         return amount * 21.25, Units.GRAMS, abbreviations
     elif in_tea_spoons(measure):
         abbreviations = ['tsp', 'teaspoon']
+        unicode_fractions = {'¼': 0.25}
+        for fract, val in unicode_fractions.items():
+            if fract in measure:
+                return val, Units.GRAMS, abbreviations
         amount = get_value_of_units(measure, abbreviations)
         return amount * 4.2, Units.GRAMS, abbreviations
     elif in_cups(measure):
@@ -248,11 +256,14 @@ for letter in alphabet:
                 })
 
         selected_fields["Ingredients"] = ingredients_list
+        for i in range(len(ingredients_list)):
+            if ingredients_list[i]["amount"] is None:
+                ingredients_list[i]["amount"] = ingredients_list[i]["text"]
 
         print("Meal:", selected_fields["strMeal"])
         #print("Instructions:", selected_fields["strInstructions"])
 
         print("Ingredients:")
         for ingredient_dict in selected_fields["Ingredients"]:
-            print(f"{ingredient_dict['ingredient']}: {ingredient_dict['amount']} {ingredient_dict['measure']}")
+            print(f"{ingredient_dict['ingredient']}: {ingredient_dict['amount']} {ingredient_dict['measure']} {ingredient_dict['text']}")
         print("\n")
