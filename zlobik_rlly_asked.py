@@ -125,7 +125,10 @@ def number_to_left(s: str, word: str) -> Optional[int]:
     pattern = fr'\d+\s*({"|".join(units)})'
     match = re.search(pattern, s)
     #return int(match.group()[:-1].strip().split(" ")[0]) if match else None
-    return int(match.group()[:-len(word)].strip()) if match else None
+    try:
+        return int(match.group()[:-len(word)].strip()) if match else 0
+    except ValueError:
+        return 0
 
 def get_value_of_units(s: str, abbreviations): 
     value = None
@@ -201,13 +204,13 @@ def get_unit(measure):
         amount = get_value_of_units(measure, abbreviations)
         return round(amount * 453.592), Units.GRAMS, abbreviations
     elif in_scoops(measure):
-        abbreviations = ['scoop'].PIECE
+        abbreviations = ['scoop']
         amount = get_value_of_units(measure, abbreviations)
         return amount, Units, abbreviations
     elif in_parts(measure):
         abbreviations = PARTS
         amount = get_value_of_units(measure, abbreviations)
-        abbreviations.append(['inch','cm', 'rd', 'th', 'nd'])
+        abbreviations.extend(['inch','cm', 'rd', 'th', 'nd'])
         return amount, Units.PIECE, abbreviations
     elif in_whole_pieces(measure):
         abbreviations = WHOLE_PIECES
@@ -224,7 +227,7 @@ def get_unit(measure):
     else:
         amount = None
         return amount, None, None
-
+result = []
 for letter in alphabet:
     response = requests.get(f'https://www.themealdb.com/api/json/v1/1/search.php?f={letter}')
     if response.status_code == 200:
@@ -238,7 +241,10 @@ for letter in alphabet:
     for meal in meals:
         selected_fields = {
             "strMeal": meal["strMeal"],
+            "strCategory": meal["strCategory"],
             "strInstructions": meal["strInstructions"],
+            "strMealThumb": meal["strMealThumb"],
+            "strYoutube": meal["strYoutube"],
         }
 
         ingredients_count = 20 # number of ingredients and measures in the meal
@@ -265,11 +271,12 @@ for letter in alphabet:
         for i in range(len(ingredients_list)):
             if ingredients_list[i]["amount"] is None:
                 ingredients_list[i]["amount"] = ingredients_list[i]["text"]
-
-        print("Meal:", selected_fields["strMeal"])
+        result.append(selected_fields)
+        #####print("Meal:", selected_fields["strMeal"])
         #print("Instructions:", selected_fields["strInstructions"])
 
         print("Ingredients:")
         for ingredient_dict in selected_fields["Ingredients"]:
             print(f"{ingredient_dict['ingredient']}: {ingredient_dict['amount']} {ingredient_dict['measure']} {ingredient_dict['text']}")
-        print("\n")
+        #####print("\n")
+print(result[0])
