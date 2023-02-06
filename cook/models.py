@@ -9,13 +9,6 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
-   # @classmethod
-    #def create_from_list(cls):
-       # values_list = category_data
-       # for value in values_list:
-          #  cls.objects.create(name = value)
-
-
 class IngredientCategory(models.Model):
     name = models.CharField(max_length=200, blank=True, null=True)
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)

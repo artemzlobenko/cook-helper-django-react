@@ -49,7 +49,6 @@ def getRoutes(request):
 class CategoryViewSet(viewsets.ModelViewSet):
     serializer_class = CategorySerializer
     queryset = Category.objects.all()
-   # Category.create_from_list()
 
 
 class IngredientCategorySet(viewsets.ModelViewSet):
@@ -82,46 +81,9 @@ class IngredientMeasureSet(viewsets.ModelViewSet):
     queryset = IngredientMeasure.objects.all()
 
 
+class UserStorageSet(viewsets.ModelViewSet):
+    serializer_class = UserStorageSerializer
+    queryset = UserStorage.objects.all()
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#@api_view(["GET"])
-#def apiOverview(request):
-    #api_urls = {
-        #'Category List': 'category-list',
-        #'Detail View': '/meal-detail/<str:pk>/',
-        #'Create': 'meal-create',
-        #'Update': '/meal-update/<str:pk>/',
-        #'Delete': '/meal-delete/<str:pk>/',
-   # }
-   # return Response(api_urls)
-#@api_view(["GET"])
-#def categoryList(request):
-    #categorys = Category.objects.all()
-    #serializer = CategorySerializer(categorys, many=True)
-    #return Response(serializer.data)
 
