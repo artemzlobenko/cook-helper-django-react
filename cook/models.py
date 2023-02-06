@@ -1,10 +1,9 @@
 from django.db import models
-#from .insert_scripts import category_data
 from django.contrib.auth.models import User
 
 class Category(models.Model):
     name = models.CharField(max_length=200, blank=True, null=True)
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
@@ -37,7 +36,7 @@ class Unit(models.Model):
 
 class Measure(models.Model):
     name = models.CharField(max_length=20)
-    amount = models.FloatField()
+    value = models.FloatField()
     unit_id = models.ForeignKey(Unit, on_delete=models.CASCADE)
 
     def __str__(self):
