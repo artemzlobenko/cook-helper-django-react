@@ -15,6 +15,7 @@ router.register(r'units', views.UnitSet, basename='unit')
 router.register(r'measures', views.MeasureSet, basename='measure')
 router.register(r'meals', views.MealSet, basename='meal')
 router.register(r'ingredient_measures', views.IngredientMeasureSet, basename='ingredient_measure')
+router.register(r'user_storages', views.UserStorageSet, basename='user_storage')
 
 urlpatterns = [
     path('token/', views.MyTokenObtainPairView.as_view(), name='token_obtain_pair'),
