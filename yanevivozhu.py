@@ -293,22 +293,22 @@ for letter in alphabet:
 
 
 
-import re
-from typing import Optional
-def number_to_left(s: str, word: str) -> Optional[int]:
-    """
-    Returns the first number to the left side of given word
-    """
-    
-    units = [
-        'g', 'gr', 'gram', 'kilogram', 'kg', 'ml', 'l', 'litre', 'teaspoon', 'tsp', 'tbsp', 'tbs', 'tbls', 'tblsp', 'tablespoon', 'cups', 'cup', 'oz', 'oz.', 'ounce', 'lb', 'lbs', 'pound', 'scoop', 'parts', 'inch', 'cm', 'drd', 'dnd', 'dth', 'whole pieces', 'well-served', '-ounce sliced'
-    ]
-
-    pattern = fr'\d+\s*({"|".join(units)})'
-    match = re.search(pattern, s)
-    #return int(match.group()[:-1].strip().split(" ")[0]) if match else None
-    try:
-        return int(match.group()[:-len(word)].strip()) if match else s
-    except ValueError:
-        return 0
-print(number_to_left('8-ounce sliced', '-ounce sliced'))
+#import re
+#from typing import Optional
+#def number_to_left(s: str, word: str) -> Optional[int]:
+#    """
+#    Returns the first number to the left side of given word
+#    """
+#    
+#    units = [
+#        'g', 'gr', 'gram', 'kilogram', 'kg', 'ml', 'l', 'litre', 'teaspoon', 'tsp', 'tbsp', 'tbs', 'tbls', 'tblsp', 'tablespoon', 'cups', 'cup', 'oz', 'oz.', 'ounce', 'lb', 'lbs', 'pound', 'scoop', 'parts', 'inch', 'cm', 'drd', 'dnd', 'dth', 'whole pieces', 'well-served', '-ounce sliced'
+#    ]
+#
+#    pattern = fr'\d+\s*({"|".join(units)})'
+#    match = re.search(pattern, s)
+#    #return int(match.group()[:-1].strip().split(" ")[0]) if match else None
+#    try:
+#        return int(match.group()[:-len(word)].strip()) if match else s
+#    except ValueError:
+#        return 0
+#print(number_to_left('8-ounce sliced', '-ounce sliced'))
