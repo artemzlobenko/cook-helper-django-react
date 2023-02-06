@@ -27,6 +27,7 @@ PARTS = [
         'halved',
         'splash',
         'splash', # don't delete
+        'thin slices',
     ]
 
 WHOLE_PIECES = [
@@ -86,6 +87,7 @@ WHOLE_PIECES = [
                     'grated',
                     'top',
                     'ancho',
+                    
     ]
 
 NON_MEASURABLE = [
@@ -119,14 +121,14 @@ def number_to_left(s: str, word: str) -> Optional[int]:
     """
     
     units = [
-        'g', 'gr', 'gram', 'kilogram', 'kg', 'ml', 'l', 'litre', 'teaspoon', 'tsp', 'tbsp', 'tbs', 'tbls', 'tblsp', 'tablespoon', 'cups', 'cup', 'oz', 'oz.', 'ounce', 'lb', 'lbs', 'pound', 'scoop', 'parts', 'inch', 'cm', 'drd', 'dnd', 'dth', 'whole pieces'
+        'g', 'gr', 'gram', 'kilogram', 'kg', 'ml', 'l', 'litre', 'teaspoon', 'tsp', 'tbsp', 'tbs', 'tbls', 'tblsp', 'tablespoon', 'cups', 'cup', 'oz', 'oz.', 'ounce', 'lb', 'lbs', 'pound', 'scoop', 'parts', 'inch', 'cm', 'drd', 'dnd', 'dth', 'whole pieces', 'beaten', '-ounce sliced' 
     ]
 
     pattern = fr'\d+\s*({"|".join(units)})'
     match = re.search(pattern, s)
     #return int(match.group()[:-1].strip().split(" ")[0]) if match else None
     try:
-        return int(match.group()[:-len(word)].strip()) if match else 0
+        return int(match.group()[:-len(word)].strip()) if match else s # 's' helps if our measure is e.g. '2'
     except ValueError:
         return 0
 
@@ -155,7 +157,10 @@ in_none = lambda string: bool(re.compile(r'|'.join(NON_MEASURABLE)).search(strin
 
 
 def get_unit(measure):
-    if in_grams(measure):
+    if measure.lower() in WHOLE_PIECES:
+        return measure.lower(), Units.PIECE, measure.lower()
+
+    elif in_grams(measure):
         abbreviations = ['g', 'gr', 'gram']
         unicode_fractions = {'¼': 0.25}
         for fract, val in unicode_fractions.items():
@@ -184,19 +189,19 @@ def get_unit(measure):
         unicode_fractions = {'¼': 0.25, '½': 0.5}
         for fract, val in unicode_fractions.items():
             if fract in measure:
-                return val, Units.GRAMS, abbreviations
+                return round(val*4.2), Units.GRAMS, abbreviations
         amount = get_value_of_units(measure, abbreviations)
         return round(amount * 4.2), Units.GRAMS, abbreviations
     elif in_cups(measure):
         abbreviations = ['cup']
-        unicode_fractions = {'¼': 0.25, '½': 0.5}
+        unicode_fractions = {'¼': 0.25, '½': 0.5, '¾': 0.75, '1\/2': 0.5}
         for fract, val in unicode_fractions.items():
             if fract in measure:
                 return val, Units.GRAMS, abbreviations
         amount = get_value_of_units(measure, abbreviations)
         return amount * 250, Units.GRAMS, abbreviations
     elif in_oz(measure):
-        abbreviations = ['oz', 'oz.', 'ounce', 'oz']
+        abbreviations = ['oz', 'oz.', 'ounce', 'oz', 'ounces', '-ounce sliced']
         amount = get_value_of_units(measure, abbreviations)
         return round(amount * 28.3495), Units.GRAMS, abbreviations
     elif in_lb(measure):
@@ -225,7 +230,7 @@ def get_unit(measure):
         amount = get_value_of_units(measure, abbreviations)
         return amount, Units.PIECE, abbreviations
     elif in_none(measure):
-        amount = 1
+        amount = measure
         abbreviations = NON_MEASURABLE
         return amount, Units.PIECE, abbreviations
     else:
@@ -281,6 +286,29 @@ for letter in alphabet:
 
         print("Ingredients:")
         for ingredient_dict in selected_fields["Ingredients"]:
-            print(f"{ingredient_dict['ingredient']}: {ingredient_dict['amount']} {ingredient_dict['measure']} {ingredient_dict['text']}")
+            print(f"{ingredient_dict['ingredient']}: {ingredient_dict['amount']}; {ingredient_dict['measure']}; {ingredient_dict['text']}")
         print("\n")
 #print(result[0])
+
+
+
+
+import re
+from typing import Optional
+def number_to_left(s: str, word: str) -> Optional[int]:
+    """
+    Returns the first number to the left side of given word
+    """
+    
+    units = [
+        'g', 'gr', 'gram', 'kilogram', 'kg', 'ml', 'l', 'litre', 'teaspoon', 'tsp', 'tbsp', 'tbs', 'tbls', 'tblsp', 'tablespoon', 'cups', 'cup', 'oz', 'oz.', 'ounce', 'lb', 'lbs', 'pound', 'scoop', 'parts', 'inch', 'cm', 'drd', 'dnd', 'dth', 'whole pieces', 'well-served', '-ounce sliced'
+    ]
+
+    pattern = fr'\d+\s*({"|".join(units)})'
+    match = re.search(pattern, s)
+    #return int(match.group()[:-1].strip().split(" ")[0]) if match else None
+    try:
+        return int(match.group()[:-len(word)].strip()) if match else s
+    except ValueError:
+        return 0
+print(number_to_left('8-ounce sliced', '-ounce sliced'))
