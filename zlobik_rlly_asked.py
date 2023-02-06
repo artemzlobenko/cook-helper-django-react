@@ -119,12 +119,13 @@ def number_to_left(s: str, word: str) -> Optional[int]:
     """
     
     units = [
-        'g', 'gr', 'gram', 'kilogram', 'kg', 'ml', 'l', 'litre', 'teaspoon', 'tsp', 'tbsp', 'tbs', 'tbls', 'tblsp', 'tablespoon', 'cups', 'oz', 'oz.', 'ounce', 'lb', 'lbs', 'pound', 'scoop', 'parts', 'inch', 'cm', 'drd', 'dnd', 'dth', 'whole pieces'
+        'g', 'gr', 'gram', 'kilogram', 'kg', 'ml', 'l', 'litre', 'teaspoon', 'tsp', 'tbsp', 'tbs', 'tbls', 'tblsp', 'tablespoon', 'cups', 'cup', 'oz', 'oz.', 'ounce', 'lb', 'lbs', 'pound', 'scoop', 'parts', 'inch', 'cm', 'drd', 'dnd', 'dth', 'whole pieces'
     ]
 
     pattern = fr'\d+\s*({"|".join(units)})'
     match = re.search(pattern, s)
-    return int(match.group()[:-1].strip().split(" ")[0]) if match else None
+    #return int(match.group()[:-1].strip().split(" ")[0]) if match else None
+    return int(match.group()[:-len(word)].strip()) if match else None
 
 def get_value_of_units(s: str, abbreviations): 
     value = None
@@ -174,15 +175,15 @@ def get_unit(measure):
     elif in_table_spoons(measure):
         abbreviations = ['tbsp', 'tbs', 'tbls', 'tblsp', 'tablespoon']
         amount = get_value_of_units(measure, abbreviations)
-        return amount * 21.25, Units.GRAMS, abbreviations
+        return round(amount * 21.25), Units.GRAMS, abbreviations
     elif in_tea_spoons(measure):
         abbreviations = ['tsp', 'teaspoon']
-        unicode_fractions = {'¼': 0.25}
+        unicode_fractions = {'¼': 0.25, '½': 0.5}
         for fract, val in unicode_fractions.items():
             if fract in measure:
                 return val, Units.GRAMS, abbreviations
         amount = get_value_of_units(measure, abbreviations)
-        return amount * 4.2, Units.GRAMS, abbreviations
+        return round(amount * 4.2), Units.GRAMS, abbreviations
     elif in_cups(measure):
         abbreviations = ['cup']
         amount = get_value_of_units(measure, abbreviations)
@@ -190,15 +191,15 @@ def get_unit(measure):
     elif in_oz(measure):
         abbreviations = ['oz', 'oz.', 'ounce', 'oz']
         amount = get_value_of_units(measure, abbreviations)
-        return amount * 28.3495, Units.GRAMS, abbreviations
+        return round(amount * 28.3495), Units.GRAMS, abbreviations
     elif in_lb(measure):
         abbreviations = ['lb', 'lbs']
         amount = get_value_of_units(measure, abbreviations)
-        return amount * 453.592, Units.GRAMS, abbreviations
+        return round(amount * 453.592), Units.GRAMS, abbreviations
     elif in_pounds(measure):
         abbreviations = ['pound']
         amount = get_value_of_units(measure, abbreviations)
-        return amount * 453.592, Units.GRAMS, abbreviations
+        return round(amount * 453.592), Units.GRAMS, abbreviations
     elif in_scoops(measure):
         abbreviations = ['scoop'].PIECE
         amount = get_value_of_units(measure, abbreviations)
@@ -210,14 +211,19 @@ def get_unit(measure):
         return amount, Units.PIECE, abbreviations
     elif in_whole_pieces(measure):
         abbreviations = WHOLE_PIECES
+        unicode_fractions = {'1 1/2': 0.5}
+        for fract, val in unicode_fractions.items():
+            if fract in measure:
+                return val, Units.GRAMS, abbreviations
         amount = get_value_of_units(measure, abbreviations)
         return amount, Units.PIECE, abbreviations
     elif in_none(measure):
-        amount = get_value_of_units(measure, abbreviations)
-        return amount, None
+        amount = None
+        abbreviations = NON_MEASURABLE
+        return amount, None, abbreviations
     else:
-        amount = get_value_of_units(measure, abbreviations)
-        return amount,None
+        amount = None
+        return amount, None, None
 
 for letter in alphabet:
     response = requests.get(f'https://www.themealdb.com/api/json/v1/1/search.php?f={letter}')
