@@ -3,17 +3,17 @@ from django.contrib import admin
 from .models import *
 
 
-class IngregientMeasureInline(admin.TabularInline):
+class IngredientMeasureInline(admin.TabularInline):
     model = IngredientMeasure
     extra = 1
 
 
 class IngredientAdmin(admin.ModelAdmin):
-    inlines = (IngregientMeasureInline,)
+    inlines = (IngredientMeasureInline,)
 
 
 class MealAdmin(admin.ModelAdmin):
-    inlines = (IngregientMeasureInline,)
+    inlines = (IngredientMeasureInline,)
 
 admin.site.register(Category)
 admin.site.register(IngredientCategory)
