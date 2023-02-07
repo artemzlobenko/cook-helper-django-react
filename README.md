@@ -37,7 +37,7 @@ To work with project you must create python virtual enviroment by using command:
 
     py -m venv env
 
-Before you can start installing or using packages in your virtual environment you'll need to activate it. Activating a virtual environment will put the virtual environment-specific python and pip executables into your shel's PATH.
+Before you can start installing or using packages in your virtual environment you'll need to activate it. Activating a virtual environment will put the virtual environment-specific python and pip executables into your shell's PATH.
 
     .\env\Scripts\activate
 
@@ -55,7 +55,7 @@ Then make migrations. Command:
 
 Then migrate:
 
-python manage.py migrate
+    python manage.py migrate
 
 Create superuser(admin):
 
@@ -72,6 +72,11 @@ password2 - confirm password
 
 Superuser usage is needed for storing main data, which can't be seen by non-superusers. 
 Then you can have all of the functionality of Django REST framework.
+
+To use Frontend u must have npm installed. Command:
+
+    npm install
+    npm start
 
 
 4. Code
