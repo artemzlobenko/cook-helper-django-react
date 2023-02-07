@@ -90,6 +90,7 @@ class IngredientMeasureSerializer(serializers.ModelSerializer):
         model = IngredientMeasure
         fields = "__all__"
 
+
 class UserStorageSerializer(serializers.ModelSerializer):
 
     class Meta:

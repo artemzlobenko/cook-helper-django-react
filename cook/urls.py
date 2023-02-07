@@ -8,8 +8,8 @@ from rest_framework_simplejwt.views import (
 
 
 router = DefaultRouter()
-router.register(r'categorys', views.CategoryViewSet, basename='category')
-router.register(r'ingredient_categorys', views.IngredientCategorySet, basename='ingredient_category')
+router.register(r'categories', views.CategoryViewSet, basename='category')
+router.register(r'ingredient_categories', views.IngredientCategorySet, basename='ingredient_category')
 router.register(r'ingredients', views.IngredientSet, basename='ingredient')
 router.register(r'units', views.UnitSet, basename='unit')
 router.register(r'measures', views.MeasureSet, basename='measure')
