@@ -34,23 +34,41 @@ tzdata 2022.7
 3. Installation 
 
 To work with project you must create python virtual enviroment by using command:
+
     py -m venv env
+
 Before you can start installing or using packages in your virtual environment you'll need to activate it. Activating a virtual environment will put the virtual environment-specific python and pip executables into your shel's PATH.
+
     .\env\Scripts\activate
+
 Then you must download all the packages in requierements.txt. Command:
+
     pip install -r requierements.txt
+
 Then in terminal set your SecretKey:
+
 $env:SECRET_KEY='django-insecure-1lt(e!7+ukhyskgqccw4+vhor4p-u$khry-vlh*=b_61_x5$#m'
+
 Then make migrations. Command:
+
     python manage.py makemigrations 
+
 Then migrate:
+
 python manage.py migrate
+
 Create superuser(admin):
+
     python manage.py createsuperuser
+
 username - your superuser name
+
 email - enter your email(used for superuser recovery)
+
 password - must be 8 characters long
+
 password2 - confirm password
+
 
 Superuser usage is needed for storing main data, which can't be seen by non-superusers. 
 Then you can have all of the functionality of Django REST framework.
