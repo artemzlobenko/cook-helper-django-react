@@ -7,17 +7,34 @@ Our web application is a recipe storage platform, where users can store, manage,
 
 2. Prerequisites
 
-asgiref 3.6.0
-Django 4.1.6
-django-cors-headers 3.13.0
-djangorestframework 3.14.0
-djangorestframework-simplejwt 5.2.2
-Python 3.10+
-Pillow 9.4.0
-PyJWT 2.6.0
-pytz 2022.7.1
-sqlparse 0.4.3
-tzdata 2022.7
+    asgiref 3.6.0
+    Django 4.1.6
+    django-cors-headers 3.13.0
+    djangorestframework 3.14.0
+    djangorestframework-simplejwt 5.2.2
+    Python 3.10+
+    Pillow 9.4.0
+    PyJWT 2.6.0
+    pytz 2022.7.1
+    sqlparse 0.4.3
+    tzdata 2022.7
+
+    axios 1.3.1
+    bootstrap 5.2.3
+    cors 2.8.5
+    dayjs 1.11.7
+    jwt-decode 3.1.2
+    react 18.2.0
+    react-bootstrap 2.7.0
+    react-dom 18.2.0
+    react-dropdown 1.11.0
+    react-player 2.11.0
+    react-router-dom 6.8.0
+    react-scripts 5.0.1
+    react-select 5.7.0
+    styled-components 5.3.6
+    use-immer 0.8.1
+    web-vitals 2.1.4
 
     - ASGI is a standard for Python asynchronous web apps and servers to communicate with each other, and positioned as an asynchronous successor to WSGI.
     - Django is a high-level Python web framework that encourages rapid development and clean, pragmatic design. Built by experienced developers, it takes care of much of the hassle of web development, so you can focus on writing your app without needing to reinvent the wheel. It's free and open source.
@@ -29,6 +46,23 @@ tzdata 2022.7
     - pytz brings the Olson tz database into Python. This library allows accurate and cross platform timezone calculations using Python 2.4 or higher.
     - tzdata is a Python package containing zic-compiled binaries for the IANA time zone database.
     - sqlparse is a non-validating SQL parser for Python. It provides support for parsing, splitting and formatting SQL statements
+
+    - axios is a lightweight HTTP client based on the $http service within Angular.js v1.x and is similar to the native JavaScript Fetch API.
+    - bootstrap - powerful, extensible, and feature-packed frontend toolkit. Build and customize with Sass, utilize prebuilt grid system and components, and bring projects to life with powerful JavaScript plugins.
+    - cors is a node.js package for providing a Connect/Express middleware that can be used to enable CORS with various options.
+    - dayjs is a minimalist JavaScript library that parses, validates, manipulates, and displays dates and times for modern browsers with a largely Moment.js-compatible API. If you use Moment.js, you already know how to use Day.js.
+    - jwt-decode is a small browser library that helps decoding JWTs token which are Base64Url encoded.
+    - React is a free and open-source front-end JavaScript library for building user interfaces based on UI components.
+    - react-bootstrap replaces the Bootstrap JavaScript. Each component has been built from scratch as a true React component, without unneeded dependencies like jQuery.
+    - react-dom serves as the entry point to the DOM and server renderers for React. It is intended to be paired with the generic React package, which is shipped as react to npm.
+    - react-dropdown Dropdown component for React, inspired by react-select.
+    - react-player component for playing a variety of URLs, including file paths, YouTube, Facebook, Twitch, SoundCloud, Streamable, Vimeo, Wistia, Mixcloud, DailyMotion and Kaltura.
+    - react-router-dom package contains bindings for using React Router in web applications.
+    - react-scripts includes scripts and configuration used by Create React App.
+    - react-select is aflexible and beautiful Select Input control for ReactJS with multiselect, autocomplete, async and creatable support.
+    - styled-components are visual primitives for the component age. Use the best bits of ES6 and CSS to style your apps without stress.
+    - use-immer is a hook to use immer as a React hook to manipulate state.
+    - web-vitals is a modular library for measuring all the Web Vitals metrics on real users, in a way that accurately matches how they're measured by Chrome and reported to other Google tools.
 
 
 3. Installation 
@@ -73,10 +107,27 @@ password2 - confirm password
 Superuser usage is needed for storing main data, which can't be seen by non-superusers. 
 Then you can have all of the functionality of Django REST framework.
 
-To use Frontend u must have npm installed. Command:
+In the project directory, run:
 
-    npm install
     npm start
+Runs the app in the development mode.
+Open http://localhost:3000 to view it in your browser.
+
+The page will reload when you make changes.
+You may also see any lint errors in the console.
+
+    npm test
+Launches the test runner in the interactive watch mode.
+See the section about running tests for more information.
+
+    npm run builds
+Builds the app for production to the build folder.
+It correctly bundles React in production mode and optimizes the build for the best performance.
+
+The build is minified and the filenames include the hashes.
+Your app is ready to be deployed!
+
+See the section about deployment for more information.
 
 
 4. Code
