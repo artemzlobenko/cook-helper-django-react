@@ -15,11 +15,10 @@ class IngredientCategory(models.Model):
     def __str__(self):
         return self.name
 
-
 class Ingredient(models.Model):
     name = models.CharField(max_length=100)
     ingredient_category_id = models.ForeignKey(IngredientCategory, on_delete=models.CASCADE, blank=True, null=True)
-    image = models.ImageField(upload_to='cook/files/images/ingredient_images', blank=True, null=True)
+    image = models.URLField(max_length=500, blank=True, null=True)
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
 
 
@@ -36,7 +35,7 @@ class Unit(models.Model):
 
 class Measure(models.Model):
     name = models.CharField(max_length=20)
-    value = models.FloatField()
+    amount = models.FloatField()
     unit_id = models.ForeignKey(Unit, on_delete=models.CASCADE)
 
     def __str__(self):
@@ -48,8 +47,8 @@ class Meal(models.Model):
     category_id = models.ForeignKey(Category, on_delete=models.CASCADE, blank=True, null=True)
     recipe = models.CharField(max_length=5000)
     ingredients = models.ManyToManyField(Ingredient, through='IngredientMeasure')
-    img = models.ImageField(upload_to='cook/files/images/meal_images', blank=True, null=True)
-    video = models.CharField(max_length=200, blank=True, null=True)
+    img = models.URLField(max_length=500, blank=True, null=True)
+    video = models.URLField(max_length=500, blank=True, null=True)
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
