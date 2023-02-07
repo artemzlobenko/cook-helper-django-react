@@ -89,7 +89,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('name', models.CharField(max_length=100)),
-                ('image', models.ImageField(blank=True, null=True, upload_to='cook/files/images/ingredient_images')),
+                ('img', models.URLField(blank=True, null=True)),
             ],
         ),
         migrations.CreateModel(
@@ -137,8 +137,8 @@ class Migration(migrations.Migration):
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('name', models.CharField(max_length=200)),
                 ('recipe', models.CharField(max_length=5000)),
-                ('img', models.ImageField(blank=True, null=True, upload_to='cook/files/images/meal_images')),
-                ('video', models.CharField(blank=True, max_length=200, null=True)),
+                ('img', models.URLField(blank=True, null=True)),
+                ('video', models.URLField(blank=True, null=True)),
                 ('category_id', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='cook.category')),
                 ('ingredients', models.ManyToManyField(through='cook.IngredientMeasure', to='cook.ingredient')),
                 ('user_id', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
@@ -173,6 +173,7 @@ class Migration(migrations.Migration):
             field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL),
         ),
     ]
+
 
 Serializers allow complex data such as querysets and model instances to be converted to native Python datatypes that can then be easily rendered into JSON, XML or other content types. Serializers also provide deserialization, allowing parsed data to be converted back into complex types, after first validating the incoming data. Serializers were made for created models and User.
 
