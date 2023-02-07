@@ -155,7 +155,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('name', models.CharField(blank=True, max_length=200, null=True)),
-                ('user_id', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],
         ),
         migrations.CreateModel(
@@ -163,7 +163,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('name', models.CharField(max_length=100)),
-                ('img', models.URLField(blank=True, null=True)),
+                ('image_url', models.URLField(blank=True, max_length=500, null=True)),
             ],
         ),
         migrations.CreateModel(
@@ -172,7 +172,7 @@ class Migration(migrations.Migration):
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('amount', models.FloatField()),
                 ('description', models.CharField(max_length=60)),
-                ('ingredient_id', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='cook.ingredient')),
+                ('ingredient', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='cook.ingredient')),
             ],
         ),
         migrations.CreateModel(
@@ -195,14 +195,14 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('amount', models.FloatField()),
-                ('ingredient_id', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='cook.ingredient')),
-                ('measure_id', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='cook.measure')),
-                ('user_id', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                ('ingredient', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='cook.ingredient')),
+                ('measure', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='cook.measure')),
+                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],
         ),
         migrations.AddField(
             model_name='measure',
-            name='unit_id',
+            name='unit',
             field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='cook.unit'),
         ),
         migrations.CreateModel(
@@ -211,21 +211,21 @@ class Migration(migrations.Migration):
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('name', models.CharField(max_length=200)),
                 ('recipe', models.CharField(max_length=5000)),
-                ('img', models.URLField(blank=True, null=True)),
-                ('video', models.URLField(blank=True, null=True)),
-                ('category_id', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='cook.category')),
+                ('image_url', models.URLField(blank=True, max_length=500, null=True)),
+                ('video_url', models.URLField(blank=True, max_length=500, null=True)),
+                ('category', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='cook.category')),
                 ('ingredients', models.ManyToManyField(through='cook.IngredientMeasure', to='cook.ingredient')),
-                ('user_id', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],
         ),
         migrations.AddField(
             model_name='ingredientmeasure',
-            name='meal_id',
+            name='meal',
             field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='cook.meal'),
         ),
         migrations.AddField(
             model_name='ingredientmeasure',
-            name='measure_id',
+            name='measure',
             field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='cook.measure'),
         ),
         migrations.CreateModel(
@@ -233,20 +233,21 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('name', models.CharField(blank=True, max_length=200, null=True)),
-                ('user_id', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],
         ),
         migrations.AddField(
             model_name='ingredient',
-            name='ingredient_category_id',
+            name='ingredient_category',
             field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='cook.ingredientcategory'),
         ),
         migrations.AddField(
             model_name='ingredient',
-            name='user_id',
+            name='user',
             field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL),
         ),
     ]
+
 
 
 Serializers allow complex data such as querysets and model instances to be converted to native Python datatypes that can then be easily rendered into JSON, XML or other content types. Serializers also provide deserialization, allowing parsed data to be converted back into complex types, after first validating the incoming data. Serializers were made for created models and User.
