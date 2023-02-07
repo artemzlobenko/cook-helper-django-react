@@ -73,7 +73,7 @@ class MeasureSet(viewsets.ModelViewSet):
 
 class MealSet(viewsets.ModelViewSet):
     serializer_class = MealSerializer
-    queryset  = Meal.objects.all()
+    queryset = Meal.objects.all()
 
 
 class IngredientMeasureSet(viewsets.ModelViewSet):
